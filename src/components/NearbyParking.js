@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserLocation } from "./UserLocationContext"; // Import useUserLocation hook
 
-function NearbyParking({ desiredLocation, parkingData }) {
+function NearbyParking({ desiredLocation }) {
   const [nearbyParkingLocations, setNearbyParkingLocations] = useState([]);
   const navigation = useNavigation();
   const [message, setMessage] = useState(null);
@@ -21,7 +21,7 @@ function NearbyParking({ desiredLocation, parkingData }) {
   useEffect(() => {
     const fetchNearbyResidentialAreas = async () => {
       try {
-        const apiUrl = `http://192.168.68.104:4000/api/residential_areas/nearby?latitude=${desiredLocation.latitude}&longitude=${desiredLocation.longitude}&radius=1000`;
+        const apiUrl = `http://192.168.68.101:3000/nearbyParking/residential_areas_nearby?latitude=${desiredLocation.latitude}&longitude=${desiredLocation.longitude}&radius=1000`;
 
         const response = await fetch(apiUrl, {
           method: "GET",

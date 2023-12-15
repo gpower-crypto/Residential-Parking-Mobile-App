@@ -6,7 +6,9 @@ import { navigate } from "./RootNavigation"; // Import navigation service
 const SidebarMenu = ({ isVisible, onClose }) => {
   const handleParkingLocationsClick = (type) => {
     // Use the navigate function to navigate to the ParkingLocations screen
-    navigate("Parking Locations", { type });
+    if (type === "recent" || type === "saved")
+      navigate("Parking Locations", { type });
+    navigate("Chat Bot", { type });
     onClose(); // Close the sidebar menu
   };
 
@@ -30,6 +32,12 @@ const SidebarMenu = ({ isVisible, onClose }) => {
           style={styles.menuButton}
         >
           <Text style={styles.menuItem}>Saved Parking Locations</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleParkingLocationsClick("chat")}
+          style={styles.menuButton}
+        >
+          <Text style={styles.menuItem}>Chat</Text>
         </TouchableOpacity>
       </View>
     </Modal>

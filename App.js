@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { UserLocationProvider } from "./src/components/UserLocationContext";
 import { navigationRef } from "./src/components/RootNavigation";
 import ParkingLocationsWrapper from "./src/components/ParkingLocationsWrapper";
+import ChatComponent from "./src/components/ChatComponent";
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,7 @@ function App() {
             name="Parking Locations"
             component={ParkingLocationsWrapper}
           />
+          <Stack.Screen name="Chat Bot" component={ChatComponent} />
         </Stack.Navigator>
         {/* Render the sidebar menu */}
         <SidebarMenu

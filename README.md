@@ -28,7 +28,7 @@ Residential Parking App is a React Native application designed to help users fin
 
 1. **Home Screen**: The main screen allows you to search for nearby residential parking locations. Click on a location to view details or click the "Save" button to save it.
 
-2. **Location Selection**: This screen displays nearby residential parking locations based on your search. Click on a location to view details or click the "Save" button to save it.
+2. **Location Selection**: This screen displays nearby residential parking locations based on your search by implementing Dijkstra's shortest path algorithm using cached map data to optimize driving routes, reducing reliance on external mapping services. Click on a location to view details or click the "Save" button to save it.
 
 3. **Parking Details**: View detailed information about a parking location and get directions.
 

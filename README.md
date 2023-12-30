@@ -43,7 +43,7 @@ The application uses AsyncStorage to store your saved parking choices. It differ
 
 ## AI Chatbot Feature
 
-The application incorporates an AI chatbot feature to provide parking assistance and enhance user interaction. The chatbot is designed to answer user queries related to parking locations and availability.
+The application incorporates an AI chatbot feature to provide parking assistance and enhance user interaction. The chatbot is designed to answer user queries related to parking locations and availability.  The AI Chatbot, powered by RAG, Anthropic Claude LLM API, and LLM prompts, provides natural language processing capabilities, enhancing user interactions and answering parking-related queries.
 
 To explore the AI chatbot feature, interact with the chat interface in the application and ask questions about parking locations.
 

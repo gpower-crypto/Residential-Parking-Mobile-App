@@ -56,7 +56,7 @@ const ParkingDetailsScreen = ({ route }) => {
   const handleSubmitAvailability = async () => {
     // Make an API request to update the availability
     try {
-      const apiUrl = `http://192.168.68.101:3000/showOrUpdate/addOrUpdateParkingAvailability?locationId=${selectedLocation.id}&available=${newAvailability}`;
+      const apiUrl = `http://192.168.68.108:3000/showOrUpdate/addOrUpdateParkingAvailability?locationId=${selectedLocation.id}&available=${newAvailability}`;
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -82,7 +82,7 @@ const ParkingDetailsScreen = ({ route }) => {
 
   const fetchAvailability = async () => {
     try {
-      const apiUrl = `http://192.168.68.101:3000/showOrUpdate/parking-availability?locationId=${selectedLocation.id}`;
+      const apiUrl = `http://192.168.68.108:3000/showOrUpdate/parking-availability?locationId=${selectedLocation.id}`;
 
       const response = await fetch(apiUrl, {
         method: "GET",
@@ -112,11 +112,11 @@ const ParkingDetailsScreen = ({ route }) => {
     // Clear the directions message
     setDirectionsMessage(null);
     // Start the countdown timer (e.g., 10 seconds)
-    startCountdown(10);
+    startCountdown(20);
 
     try {
       // Make an API call to get directions
-      const apiUrl = `http://192.168.68.101:3000/directions/getDirections?startLat=${userLocation.latitude}&startLong=${userLocation.longitude}&endLat=${selectedLocation.lat}&endLong=${selectedLocation.long}`;
+      const apiUrl = `http://192.168.68.108:3000/directions/getDirections?startLat=${userLocation.latitude}&startLong=${userLocation.longitude}&endLat=${selectedLocation.lat}&endLong=${selectedLocation.long}`;
       const response = await fetch(apiUrl, {
         method: "GET",
       });
@@ -187,22 +187,29 @@ const ParkingDetailsScreen = ({ route }) => {
         <Text style={styles.text}>{directionsMessage}</Text>
       )}
       {/* Button to trigger handleGetDirections */}
-      <Button
-        title="Get Directions"
-        onPress={handleGetDirections}
-        style={styles.button}
-        disabled={isGetDirectionsButtonDisabled}
-      />
-      {countdown !== null && (
-        <Text style={styles.text}>
-          Loading directions in {countdown} seconds...
-        </Text>
-      )}
-      <Button
-        title="Edit Availability"
-        onPress={handleEditAvailability}
-        style={styles.button}
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Get Directions"
+          onPress={handleGetDirections}
+          style={styles.button}
+          disabled={isGetDirectionsButtonDisabled}
+        />
+        {countdown !== null && (
+          <Text style={styles.text}>
+            Loading directions in {countdown} seconds...
+          </Text>
+        )}
+      </View>
+
+      {/* Button to trigger handleEditAvailability */}
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Edit Availability"
+          onPress={handleEditAvailability}
+          style={styles.button}
+        />
+      </View>
+
       <Modal
         visible={isEditModalVisible}
         animationType="slide"
@@ -272,6 +279,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 5,
     backgroundColor: "#fff",
+  },
+  buttonContainer: {
+    marginTop: 20,
   },
 });
 

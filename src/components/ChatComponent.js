@@ -35,7 +35,7 @@ const ChatComponent = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.68.101:3000/parkingInfo/getParkingInfo",
+        "http://192.168.68.108:3000/parkingInfo/getParkingInfo",
         {
           method: "POST",
           headers: {

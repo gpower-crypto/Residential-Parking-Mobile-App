@@ -8,7 +8,7 @@ const SidebarMenu = ({ isVisible, onClose }) => {
     // Use the navigate function to navigate to the ParkingLocations screen
     if (type === "recent" || type === "saved")
       navigate("Parking Locations", { type });
-    navigate("Chat Bot", { type });
+    if (type === "chat") navigate("Chat Bot", { type });
     onClose(); // Close the sidebar menu
   };
 

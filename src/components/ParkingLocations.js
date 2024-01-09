@@ -28,7 +28,14 @@ function ParkingLocations({ type }) {
 
         if (storedChoices) {
           const parsedChoices = JSON.parse(storedChoices);
-          setLocations(parsedChoices);
+          // Reverse the array to get the latest choices first
+          const reversedChoices = parsedChoices.reverse();
+
+          // If the type is "recent," limit the displayed recent parking choices to the top 10 most recent
+          const filteredChoices =
+            type === "recent" ? reversedChoices.slice(0, 10) : reversedChoices;
+
+          setLocations(filteredChoices);
         }
 
         setIsDataLoaded(true);

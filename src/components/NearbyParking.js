@@ -21,7 +21,7 @@ function NearbyParking({ desiredLocation }) {
   useEffect(() => {
     const fetchNearbyResidentialAreas = async () => {
       try {
-        const apiUrl = `http://192.168.68.101:3000/nearbyParking/residential_areas_nearby?latitude=${desiredLocation.latitude}&longitude=${desiredLocation.longitude}&radius=1000`;
+        const apiUrl = `http://192.168.68.108:3000/nearbyParking/residential_areas_nearby?latitude=${desiredLocation.latitude}&longitude=${desiredLocation.longitude}&radius=1000`;
 
         const response = await fetch(apiUrl, {
           method: "GET",

@@ -13,11 +13,16 @@ const ChatComponent = () => {
   const [responseText, setResponseText] = useState("");
   const [inputText, setInputText] = useState("");
   const flatListRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleQuerySubmit = async () => {
     if (!inputText) {
       return;
     }
+    // Set isLoading to true when submitting the query
+    setIsLoading(true);
+
+    setInputText(null);
 
     // Update the chat with the user's message
     setMessages((prevMessages) => [
@@ -83,6 +88,7 @@ const ChatComponent = () => {
 
     // Clear the input text
     setInputText("");
+    setIsLoading(false);
   };
 
   return (
@@ -92,11 +98,28 @@ const ChatComponent = () => {
         data={messages}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
-          <View
-            style={item.user._id === 1 ? styles.userMessage : styles.botMessage}
-          >
-            <Text style={styles.messageText}>{item.text}</Text>
-          </View>
+          <>
+            {item.user._id !== 1 && ( // Check if the message is from the bot
+              <View style={styles.responseContainer}>
+                <Text style={styles.responseText}>Chatbot</Text>
+              </View>
+            )}
+            <View
+              style={
+                item.user._id === 1 ? styles.userMessage : styles.botMessage
+              }
+            >
+              <Text
+                style={
+                  item.user._id === 1
+                    ? styles.userMessageText
+                    : styles.botMessageText
+                }
+              >
+                {item.text}
+              </Text>
+            </View>
+          </>
         )}
         ListFooterComponent={
           <View
@@ -104,6 +127,12 @@ const ChatComponent = () => {
           />
         }
       />
+
+      {isLoading && (
+        <View style={styles.loadingDots}>
+          <Text>Loading...</Text>
+        </View>
+      )}
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -114,11 +143,6 @@ const ChatComponent = () => {
         />
         <Button title="Send" onPress={handleQuerySubmit} />
       </View>
-      {responseText && (
-        <View style={styles.responseContainer}>
-          <Text style={styles.responseText}>{responseText}</Text>
-        </View>
-      )}
     </View>
   );
 };
@@ -126,22 +150,28 @@ const ChatComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 10,
   },
   userMessage: {
     padding: 10,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "#1d8ae0",
     alignSelf: "flex-end",
     borderRadius: 8,
-    margin: 5,
+    marginBottom: 25,
   },
   botMessage: {
     padding: 10,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#e0e0e0",
     alignSelf: "flex-start",
     borderRadius: 8,
     margin: 5,
+    marginBottom: 39,
   },
-  messageText: {
+  userMessageText: {
+    fontSize: 16,
+    color: "white",
+  },
+  botMessageText: {
     fontSize: 16,
   },
   inputContainer: {
@@ -161,11 +191,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   responseContainer: {
-    padding: 10,
-    backgroundColor: "#e0e0e0",
+    padding: 5,
+    alignSelf: "flex-start", // Adjust the alignment based on your preference
   },
   responseText: {
-    fontSize: 16,
+    fontSize: 15,
+    color: "#7a7f82", // Adjust the color based on your preference
+  },
+  loadingDots: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
   },
 });
 

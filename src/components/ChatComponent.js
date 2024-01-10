@@ -40,7 +40,7 @@ const ChatComponent = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.68.108:3000/parkingInfo/getParkingInfo",
+        "http://parking-api-LB-1578947644.us-east-1.elb.amazonaws.com:3000/parkingInfo/getParkingInfo",
         {
           method: "POST",
           headers: {

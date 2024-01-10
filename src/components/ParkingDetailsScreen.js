@@ -56,7 +56,7 @@ const ParkingDetailsScreen = ({ route }) => {
   const handleSubmitAvailability = async () => {
     // Make an API request to update the availability
     try {
-      const apiUrl = `http://192.168.68.108:3000/showOrUpdate/addOrUpdateParkingAvailability?locationId=${selectedLocation.id}&available=${newAvailability}`;
+      const apiUrl = `http://parking-api-LB-1578947644.us-east-1.elb.amazonaws.com:3000/showOrUpdate/addOrUpdateParkingAvailability?locationId=${selectedLocation.id}&available=${newAvailability}`;
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -82,7 +82,7 @@ const ParkingDetailsScreen = ({ route }) => {
 
   const fetchAvailability = async () => {
     try {
-      const apiUrl = `http://192.168.68.108:3000/showOrUpdate/parking-availability?locationId=${selectedLocation.id}`;
+      const apiUrl = `http://parking-api-LB-1578947644.us-east-1.elb.amazonaws.com:3000/showOrUpdate/parking-availability?locationId=${selectedLocation.id}`;
 
       const response = await fetch(apiUrl, {
         method: "GET",
@@ -116,7 +116,7 @@ const ParkingDetailsScreen = ({ route }) => {
 
     try {
       // Make an API call to get directions
-      const apiUrl = `http://192.168.68.108:3000/directions/getDirections?startLat=${userLocation.latitude}&startLong=${userLocation.longitude}&endLat=${selectedLocation.lat}&endLong=${selectedLocation.long}`;
+      const apiUrl = `http://parking-api-LB-1578947644.us-east-1.elb.amazonaws.com:3000/directions/getDirections?startLat=${userLocation.latitude}&startLong=${userLocation.longitude}&endLat=${selectedLocation.lat}&endLong=${selectedLocation.long}`;
       const response = await fetch(apiUrl, {
         method: "GET",
       });

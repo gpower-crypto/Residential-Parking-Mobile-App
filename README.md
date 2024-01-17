@@ -1,6 +1,6 @@
 # Residential Parking App
 
-Residential Parking App is a React Native application designed to help users find and save nearby parking locations in residential areas.
+Residential Parking App is a React Native application designed to help users find and save nearby parking locations in residential areas. The Nodejs server API (open source) that provides the respective parking and other data is [here](https://github.com/gpower-crypto/Residential-Parking-API).
 
 ## Getting Started
 

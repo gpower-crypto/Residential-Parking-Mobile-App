@@ -1,6 +1,6 @@
 # Residential Parking App
 
-Residential Parking App is a React Native application designed to help users find and save nearby parking locations in residential areas.
+Residential Parking App is a React Native application designed to help users find and save nearby parking locations in residential areas. The Nodejs server API (open source) that provides the respective parking and other data is [here](https://github.com/gpower-crypto/Residential-Parking-API).
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ The application uses AsyncStorage to store your saved parking choices. It differ
 
 ## AI Chatbot Feature
 
-The application incorporates an AI chatbot feature to provide parking assistance and enhance user interaction. The chatbot is designed to answer user queries related to parking locations and availability.  The AI Chatbot, powered by RAG, Anthropic Claude LLM API, and LLM prompts, provides natural language processing capabilities, enhancing user interactions and answering parking-related queries.
+The application incorporates an AI chatbot feature to provide parking assistance and enhance user interaction. The chatbot is designed to answer user queries related to parking locations and availability.  The AI Chatbot, powered by RAG, Open Ai LLM API, and LLM prompts, provides natural language processing capabilities, enhancing user interactions and answering parking-related queries.
 
 To explore the AI chatbot feature, interact with the chat interface in the application and ask questions about parking locations.
 

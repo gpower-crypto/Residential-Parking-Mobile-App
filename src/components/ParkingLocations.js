@@ -33,7 +33,9 @@ function ParkingLocations({ type }) {
 
           // If the type is "recent," limit the displayed recent parking choices to the top 10 most recent
           const filteredChoices =
-            type === "recent" ? reversedChoices.slice(0, 5) : reversedChoices;
+            type === "recent"
+              ? reversedChoices.slice(0, Math.min(reversedChoices.length, 10))
+              : reversedChoices;
 
           setLocations(filteredChoices);
 

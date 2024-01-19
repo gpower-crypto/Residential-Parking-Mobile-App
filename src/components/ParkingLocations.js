@@ -33,9 +33,15 @@ function ParkingLocations({ type }) {
 
           // If the type is "recent," limit the displayed recent parking choices to the top 10 most recent
           const filteredChoices =
-            type === "recent" ? reversedChoices.slice(0, 10) : reversedChoices;
+            type === "recent" ? reversedChoices.slice(0, 5) : reversedChoices;
 
           setLocations(filteredChoices);
+
+          // Update AsyncStorage with the filtered choices
+          await AsyncStorage.setItem(
+            storageKey,
+            JSON.stringify(filteredChoices)
+          );
         }
 
         setIsDataLoaded(true);

@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Modal,
-  TextInput,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Button, StyleSheet, Modal, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useUserLocation } from "./UserLocationContext";
 
 const ParkingDetailsScreen = ({ route }) => {
-  const { selectedLocation } = route.params;
-  const navigation = useNavigation();
-  const userLocation = useUserLocation();
+  const { selectedLocation } = route.params; // Get the selectedLocation from the route parameters
+  const navigation = useNavigation(); // Access the navigation object
+  const userLocation = useUserLocation(); // Use the userLocation from the context
   const [availability, setAvailability] = useState();
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  // State to store the new availability input
   const [newAvailability, setNewAvailability] = useState("");
   const [isGetDirectionsButtonDisabled, setIsGetDirectionsButtonDisabled] =
     useState(false);
   const [directionsMessage, setDirectionsMessage] = useState();
+
+  // State for countdown timer
   const [countdown, setCountdown] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    fetchAvailability();
-  }, []);
-
+  // Function to start the countdown timer
   const startCountdown = (seconds) => {
     setCountdown(seconds);
   };
 
+  // Effect to decrement the countdown timer
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => {
@@ -42,29 +34,27 @@ const ParkingDetailsScreen = ({ route }) => {
     }
   }, [countdown]);
 
+  // Function to reset the countdown timer
   const resetCountdown = () => {
     setCountdown(null);
   };
 
+  // Function to open the edit modal
   const handleEditAvailability = () => {
     setIsEditModalVisible(true);
   };
 
+  // Function to close the edit modal
   const handleEditModalClose = () => {
     setIsEditModalVisible(false);
+    // Clear the input field when closing the modal
     setNewAvailability("");
   };
 
+  // Function to submit the updated availability
   const handleSubmitAvailability = async () => {
+    // Make an API request to update the availability
     try {
-      setIsLoading(true);
-
-      // Update local state with the new availability immediately
-      setAvailability((prevAvailability) => ({
-        ...prevAvailability,
-        available: newAvailability,
-      }));
-
       const apiUrl = `http://parking-api-LB-1578947644.us-east-1.elb.amazonaws.com:3000/showOrUpdate/addOrUpdateParkingAvailability?locationId=${selectedLocation.id}&available=${newAvailability}`;
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -79,12 +69,13 @@ const ParkingDetailsScreen = ({ route }) => {
         return;
       }
 
+      // Close the edit modal after successful update
       handleEditModalClose();
+
+      // Fetch the updated availability
       fetchAvailability();
     } catch (error) {
       console.error("Error updating parking availability:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -100,46 +91,62 @@ const ParkingDetailsScreen = ({ route }) => {
         return;
       }
 
-      const newAvailability = await response.json();
-      setAvailability(newAvailability);
+      const availability = await response.json();
+      // Assuming your API returns an array of residential areas
+      setAvailability(availability);
     } catch (error) {
-      console.error("Error fetching parking availability:", error);
+      console.error(
+        "Error fetching parking availability of residential areas:",
+        error
+      );
     }
   };
+  fetchAvailability();
 
+  // Function to handle getting directions
   const handleGetDirections = async () => {
+    // Disable the button to prevent multiple clicks
     setIsGetDirectionsButtonDisabled(true);
+    // Clear the directions message
     setDirectionsMessage(null);
+    // Start the countdown timer (e.g., 10 seconds)
     startCountdown(20);
 
     try {
+      // Make an API call to get directions
       const apiUrl = `http://parking-api-LB-1578947644.us-east-1.elb.amazonaws.com:3000/directions/getDirections?startLat=${userLocation.latitude}&startLong=${userLocation.longitude}&endLat=${selectedLocation.lat}&endLong=${selectedLocation.long}`;
       const response = await fetch(apiUrl, {
         method: "GET",
       });
 
+      // Clear the countdown timer
       resetCountdown();
 
       if (!response.ok) {
+        // console.error("Error getting directions");
+        // Show an error message on the screen
         setDirectionsMessage("No path found to the location");
         return;
       }
 
       const directions = await response.json();
-
       if (
         directions &&
         directions.directions &&
         directions.directions.length > 0
       ) {
+        // Navigate to a DirectionsScreen and pass the 'directions' data
         navigation.navigate("DirectionsScreen", { directions });
       } else {
+        // Handle the case where no directions are available
         setDirectionsMessage("No directions available for this route.");
       }
     } catch (error) {
       console.error("Error getting directions:", error);
+      // Show an error message on the screen
       setDirectionsMessage("An error occurred while fetching directions.");
     } finally {
+      // Re-enable the button
       setIsGetDirectionsButtonDisabled(false);
     }
   };
@@ -149,7 +156,6 @@ const ParkingDetailsScreen = ({ route }) => {
       <Text style={styles.title}>Parking Availability Details</Text>
       <Text style={styles.label}>Location:</Text>
       <Text style={styles.text}>{selectedLocation.area_name}</Text>
-
       {availability && availability.available !== undefined ? (
         <>
           <Text style={styles.label}>
@@ -159,7 +165,7 @@ const ParkingDetailsScreen = ({ route }) => {
           {availability.predictedAvailability && (
             <>
               <Text style={styles.label}>
-                Predicted Available Lots Currently:
+                Predicted Availabile Lots Currently:
               </Text>
               <Text style={styles.text}>
                 {availability.predictedAvailability}
@@ -174,11 +180,10 @@ const ParkingDetailsScreen = ({ route }) => {
             : "No parking availability data available for this location."}
         </Text>
       )}
-
-      {directionsMessage && (
+      {directionsMessage && ( // Check if there's a message to display
         <Text style={styles.text}>{directionsMessage}</Text>
       )}
-
+      {/* Button to trigger handleGetDirections */}
       <View style={styles.buttonContainer}>
         <Button
           title="Get Directions"
@@ -193,6 +198,7 @@ const ParkingDetailsScreen = ({ route }) => {
         )}
       </View>
 
+      {/* Button to trigger handleEditAvailability */}
       <View style={styles.buttonContainer}>
         <Button
           title="Edit Availability"
@@ -218,8 +224,6 @@ const ParkingDetailsScreen = ({ route }) => {
           <Button title="Close" onPress={handleEditModalClose} />
         </View>
       </Modal>
-
-      {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
     </View>
   );
 };

@@ -1,7 +1,6 @@
 ## Parking App Video Demo
 
-[![Demo Video](https://img.youtube.com/vi/spB-42foP8Q/0.jpg)](https://www.youtube.com/watch?v=spB-42foP8Q)
-
+[![Demo Video](https://img.youtube.com/vi/hbkWpIMpD-c/0.jpg)](https://www.youtube.com/watch?v=hbkWpIMpD-c)
 
 # Residential Parking App
 
